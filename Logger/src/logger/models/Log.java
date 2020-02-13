@@ -8,21 +8,25 @@ import java.util.stream.Stream;
 import java.util.Comparator;
 
 public class Log {
-	
+	public static enum Priority{
+		Low,
+		Medium,
+		High
+	}
 	private String message;
 	private String caller;
-	private int prio;
+	private Priority prio;
 	private Date timestamp;
 	
 	public static PrintStream out;
 	
 	private Log() {
-		this.prio = Integer.MIN_VALUE;
+		this.prio = Priority.Low;
 		this.timestamp = Calendar.getInstance().getTime();
 		this.caller = "Unknown";
 	}
 	private Log(int prio) {
-		this.prio = prio;
+		this.prio = Priority.Low;
 		this.timestamp = Calendar.getInstance().getTime();
 		this.caller = "Unknown";
 	}
@@ -32,14 +36,14 @@ public class Log {
 		//Log.printLog(this);
 	}
 	public Log(String message, String caller) {
-		this.prio = Integer.MIN_VALUE;
+		this.prio = Priority.Low;
 		this.timestamp = Calendar.getInstance().getTime();
 		this.caller = caller;
 		this.message = message;
 		
 		//Log.printLog(this);
 	}
-	public Log(String message, int prio, Object[] args) {
+	public Log(String message, Priority prio, Object[] args) {
 		//TODO Log with args callable constructor body
 	}
 	public Log(String message, int prio) {
@@ -88,7 +92,7 @@ public class Log {
 		@Override
 		public int compare(Log o1, Log o2) {
 			// TODO Auto-generated method stub
-			return o1.prio - o2.prio;
+			return o1.prio.ordinal() - o2.prio.ordinal();
 		}
 		
 	}
